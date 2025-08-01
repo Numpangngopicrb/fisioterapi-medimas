@@ -18,7 +18,7 @@ const queueRef = ref(db, 'antrian');
 
 const form = document.getElementById('queueForm');
 const tableBody = document.querySelector('#queueTable tbody');
-let currentRowKey = null; // Untuk menyimpan ID baris yang sedang diproses
+let currentRowKey = null;
 
 form.addEventListener('submit', async function (e) {
   e.preventDefault();
@@ -69,7 +69,7 @@ onValue(queueRef, (snapshot) => {
 });
 
 function getStatusClass(status) {
-  switch (status) {
+  switch(status) {
     case 'MENUNGGU': return 'status-waiting';
     case 'PROSES': return 'status-processing';
     case 'SELESAI': return 'status-done';
@@ -77,20 +77,19 @@ function getStatusClass(status) {
   }
 }
 
-// ✅ MODAL DROPDOWN LOGIC
+// TAMPILKAN MODAL DROPDOWN
 window.openFisioterapisModal = function (key) {
   currentRowKey = key;
-  document.getElementById('fisioterapisDropdown').value = "";
   document.getElementById('fisioterapisModal').style.display = 'flex';
 };
 
-window.closeFisioterapisModal = function () {
-  document.getElementById('fisioterapisModal').style.display = 'none';
-};
-
+// KONFIRMASI PILIHAN FISIOTERAPIS
 window.confirmFisioterapisDropdown = async function () {
   const selected = document.getElementById('fisioterapisDropdown').value;
-  if (!selected) return alert("Silakan pilih fisioterapis.");
+  if (!selected) {
+    alert("Silakan pilih fisioterapis terlebih dahulu.");
+    return;
+  }
 
   const startTime = new Date().toISOString();
   await update(ref(db, 'antrian/' + currentRowKey), {
@@ -99,7 +98,12 @@ window.confirmFisioterapisDropdown = async function () {
     startTime: startTime
   });
 
-  closeFisioterapisModal();
+  document.getElementById('fisioterapisModal').style.display = 'none';
+};
+
+// TUTUP MODAL
+window.closeFisioterapisModal = function () {
+  document.getElementById('fisioterapisModal').style.display = 'none';
 };
 
 window.completeQueue = async function (key) {
