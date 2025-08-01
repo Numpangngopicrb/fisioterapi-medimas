@@ -9,7 +9,7 @@ const firebaseConfig = {
   messagingSenderId: "86725418821",
   appId: "1:86725418821:web:b47d84c9c964a6df80e82c",
   measurementId: "G-QVTC940VL5",
-  databaseURL: "https://fisioterapi-medimas-default-rtdb.asia-southeast1.firebasedatabase.app"
+  databaseURL: "https://fisioterapi-medimas-default-rtdb.asia-southeast1.firebasedatabase.app/" // ✅ updated
 };
 
 const app = initializeApp(firebaseConfig);
