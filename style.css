@@ -1,153 +1,160 @@
-:root {
-  --primary-color: #3b999b;
-  --secondary-color: #dddddd;
-  --success-color: #66bb6a;
-  --danger-color: #ef5350;
-  --warning-color: #ffee58;
-  --font-color: #333;
-  --bg-color: #ffffff;
-}
-
+/* Gaya umum */
 body {
-  font-family: 'Segoe UI', sans-serif;
-  padding: 20px;
-  background-color: var(--secondary-color);
-  color: var(--font-color);
-  max-width: 960px;
-  margin: auto;
-}
-
-h1 {
-  text-align: center;
-  color: var(--primary-color);
-  margin-bottom: 5px;
-}
-
-.running-text {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 5px 10px;
-  margin-bottom: 20px;
-  border-radius: 6px;
-  text-align: center;
-}
-
-form {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 12px;
-  margin-bottom: 20px;
-}
-
-input, select, button {
+  font-family: Arial, sans-serif;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  font-size: 14px;
-  width: 100%;
-  box-sizing: border-box;
+  background-color: #f0f0f0;
+  margin: 0;
 }
 
-button[type="submit"],
-#exportBtn {
-  background-color: var(--primary-color);
+.container {
+  max-width: 700px;
+  margin: 20px auto;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Formulir input */
+form input,
+form select,
+form button {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+form button {
+  background-color: #3b999b;
   color: white;
   border: none;
-  transition: background-color 0.2s ease;
+  cursor: pointer;
 }
 
-button:hover {
-  background-color: #317f7f;
+form button:hover {
+  background-color: #33888a;
 }
 
-#exportBtn {
-  margin-bottom: 20px;
-}
-
+/* Tabel antrian */
 table {
   width: 100%;
   border-collapse: collapse;
-  background-color: var(--bg-color);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-th, td {
-  border: 1px solid #ccc;
-  padding: 10px;
-  text-align: center;
   font-size: 14px;
+  background-color: white;
+  margin-top: 20px;
 }
 
-thead {
-  background-color: var(--primary-color);
+table th,
+table td {
+  border: 1px solid #ccc;
+  padding: 6px;
+  text-align: center;
+}
+
+th {
+  background-color: #3b999b;
   color: white;
-  position: sticky;
-  top: 0;
 }
 
-tbody tr:nth-child(even) {
-  background-color: #f9f9f9;
-}
-
-.status-waiting {
-  background-color: #fff3cd;
-}
-
-.status-processing {
-  background-color: #cce5ff;
-}
-
-.status-done {
-  background-color: #d4edda;
-}
-
+/* Tombol aksi */
 button {
+  padding: 6px 10px;
+  margin: 2px;
+  font-size: 13px;
+  border-radius: 5px;
   cursor: pointer;
 }
 
 .action-buttons button {
-  margin: 2px;
-  padding: 6px 10px;
-  border-radius: 5px;
-  font-size: 12px;
-  border: none;
+  background-color: #eee;
+  border: 1px solid #ccc;
 }
 
-.action-buttons button:nth-child(1) {
-  background-color: var(--primary-color);
-  color: white;
+.action-buttons button:hover {
+  background-color: #ddd;
 }
 
-.action-buttons button:nth-child(2) {
-  background-color: var(--success-color);
-  color: white;
+/* Status warna */
+.status-waiting {
+  background-color: #fff3cd;
+  color: #856404;
+  font-weight: bold;
 }
 
-.action-buttons button:nth-child(3) {
-  background-color: var(--danger-color);
-  color: white;
+.status-processing {
+  background-color: #cce5ff;
+  color: #004085;
+  font-weight: bold;
 }
 
-.modal {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: rgba(0,0,0,0.5);
+.status-done {
+  background-color: #d4edda;
+  color: #155724;
+  font-weight: bold;
+}
+
+/* Modal fisioterapis */
+#fisioterapisModal {
   display: none;
-  align-items: center;
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.4);
   justify-content: center;
-  z-index: 999;
+  align-items: center;
 }
 
-.modal-content {
-  background: white;
-  padding: 30px;
+#fisioterapisModal .modal-content {
+  background-color: #fff;
+  padding: 20px;
   border-radius: 10px;
-  min-width: 300px;
+  width: 300px;
   text-align: center;
 }
 
-.modal-content select,
-.modal-content button {
-  margin-top: 15px;
+/* Ekspor tombol */
+.export-button {
+  background-color: #28a745;
+  color: white;
+  padding: 6px 10px;
+  font-size: 14px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.export-button:hover {
+  background-color: #218838;
+}
+
+/* Responsif */
+@media screen and (max-width: 480px) {
+  .container {
+    padding: 10px;
+    max-width: 95%;
+  }
+
+  table th,
+  table td {
+    font-size: 12px;
+    padding: 4px;
+  }
+
+  form input,
+  form select {
+    font-size: 13px;
+    padding: 6px;
+  }
+
+  button {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
 }
