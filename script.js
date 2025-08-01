@@ -1,11 +1,6 @@
 let queue = [];
-let selectedRow = null;
-
-// Ambil referensi elemen
+let tableBody = document.querySelector("#queueTable tbody");
 const form = document.getElementById("queueForm");
-const tableBody = document.querySelector("#queueTable tbody");
-const fisioterapisModal = document.getElementById("fisioterapisModal");
-const dropdown = document.getElementById("fisioterapisDropdown");
 
 form.addEventListener("submit", function (e) {
   e.preventDefault();
@@ -43,37 +38,37 @@ function renderTable() {
   tableBody.innerHTML = "";
   queue.forEach((data, index) => {
     const row = tableBody.insertRow();
-row.innerHTML = `
-  <td>${index + 1}</td>
-  <td>${entry.nama}</td>
-  <td>${entry.waktu}</td>
-  <td>${entry.jenis}</td>
-  <td>${entry.status || '-'}</td>
-  <td>${entry.fisioterapis || '-'}</td>
-  <td>${entry.respon || '-'}</td>
-  <td>${dropdown}</td>
-`;
+
+    const fisioterapisDropdown = `
+      <select onchange="pilihFisioterapis(this, ${index})">
+        <option value="">Pilih Fisioterapis</option>
+        <option value="Nikita Radiantika, A.Md.Ftr">Nikita Radiantika, A.Md.Ftr</option>
+        <option value="Intu Wahyuni, A.Md.Ftr">Intu Wahyuni, A.Md.Ftr</option>
+        <option value="Indah Fitricya Niwar, A.Md.Ftr">Indah Fitricya Niwar, A.Md.Ftr</option>
+        <option value="Faika Nabila Cheryl, A.Md.Ftr">Faika Nabila Cheryl, A.Md.Ftr</option>
+      </select>
+    `;
+
+    row.innerHTML = `
+      <td>${index + 1}</td>
+      <td>${data.name}</td>
+      <td>${new Date(data.time).toLocaleString("id-ID")}</td>
+      <td>${data.tindakan}</td>
+      <td>${data.status || '-'}</td>
+      <td>${data.fisio || '-'}</td>
+      <td>${data.respon || '-'}</td>
+      <td>${fisioterapisDropdown}</td>
     `;
   });
 }
 
-function openFisioterapisModal(index) {
-  selectedRow = index;
-  fisioterapisModal.style.display = "block";
-}
+function pilihFisioterapis(selectEl, index) {
+  const selectedName = selectEl.value;
+  if (!selectedName) return;
 
-function closeFisioterapisModal() {
-  fisioterapisModal.style.display = "none";
-}
-
-function confirmFisioterapisDropdown() {
-  const fisioName = dropdown.value;
-  if (!fisioName || selectedRow === null) return;
-
-  queue[selectedRow].fisio = fisioName;
-  queue[selectedRow].status = "Sedang Diperiksa";
+  queue[index].fisio = selectedName;
+  queue[index].status = "Sedang Diperiksa";
   renderTable();
-  closeFisioterapisModal();
 }
 
 function markAsDone(index) {
@@ -81,12 +76,6 @@ function markAsDone(index) {
   queue[index].respon = "✅";
   renderTable();
 }
-
-window.onclick = function (event) {
-  if (event.target === fisioterapisModal) {
-    closeFisioterapisModal();
-  }
-};
 
 function exportToExcel() {
   const wb = XLSX.utils.book_new();
