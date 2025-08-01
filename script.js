@@ -9,7 +9,7 @@ const firebaseConfig = {
   messagingSenderId: "86725418821",
   appId: "1:86725418821:web:b47d84c9c964a6df80e82c",
   measurementId: "G-QVTC940VL5",
-  databaseURL: "https://fisioterapi-medimas-default-rtdb.asia-southeast1.firebasedatabase.app/" // ✅ updated
+  databaseURL: "https://fisioterapi-medimas-default-rtdb.asia-southeast1.firebasedatabase.app/"
 };
 
 const app = initializeApp(firebaseConfig);
@@ -18,7 +18,6 @@ const queueRef = ref(db, 'antrian');
 
 const form = document.getElementById('queueForm');
 const tableBody = document.querySelector('#queueTable tbody');
-let currentRowKey = null;
 
 form.addEventListener('submit', async function (e) {
   e.preventDefault();
@@ -59,7 +58,7 @@ onValue(queueRef, (snapshot) => {
       <td class="handled-by">${data.fisioterapis}</td>
       <td class="response-time">${data.respons}</td>
       <td class="action-buttons">
-        <button onclick="openFisioterapisModal('${key}')">Proses</button>
+        <button onclick="openFisioterapisPrompt('${key}')">Proses</button>
         <button onclick="completeQueue('${key}')" style="${data.status === 'PROSES' ? '' : 'display:none;'}">Selesai</button>
         <button onclick="deleteQueue('${key}')">Hapus</button>
       </td>
@@ -77,20 +76,32 @@ function getStatusClass(status) {
   }
 }
 
-window.openFisioterapisModal = function(key) {
-  currentRowKey = key;
-  document.getElementById('modal').style.display = 'flex';
-}
+window.openFisioterapisPrompt = async function(key) {
+  const list = [
+    "Nikita Radiantika, A.Md.Ftr",
+    "Intu Wahyuni, A.Md.Ftr",
+    "Indah Fitricya Niwar, A.Md.Ftr",
+    "Faika Nabila Cheryl, A.Md.Ftr"
+  ];
 
-window.confirmFisioterapis = async function () {
-  const selected = document.getElementById('fisioterapisSelect').value;
-  const startTime = new Date().toISOString();
-  await update(ref(db, 'antrian/' + currentRowKey), {
-    status: 'PROSES',
-    fisioterapis: selected,
-    startTime: startTime
-  });
-  document.getElementById('modal').style.display = 'none';
+  const pilihan = prompt(
+    "Pilih Fisioterapis:\n" +
+    list.map((nama, i) => `${i + 1}. ${nama}`).join("\n")
+  );
+
+  const index = parseInt(pilihan) - 1;
+  if (index >= 0 && index < list.length) {
+    const selected = list[index];
+    const startTime = new Date().toISOString();
+
+    await update(ref(db, 'antrian/' + key), {
+      status: 'PROSES',
+      fisioterapis: selected,
+      startTime: startTime
+    });
+  } else {
+    alert("Pilihan tidak valid atau dibatalkan.");
+  }
 }
 
 window.completeQueue = async function (key) {
