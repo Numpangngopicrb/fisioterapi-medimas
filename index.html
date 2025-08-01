@@ -1,12 +1,3 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SYSTEM INFORMASI FISIOTERAPI RS MEDIMAS CIREBON</title>
-  <link rel="stylesheet" href="style.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
-</head>
 <body>
 
   <!-- HEADER DAN RUNNING TEKS -->
@@ -19,49 +10,50 @@
     </div>
   </header>
 
-  <!-- FORM ANTRIAN -->
-  <form id="queueForm">
-    <input type="text" id="patientName" placeholder="Nama Pasien" required />
-    <input type="text" id="patientRM" placeholder="No RM" required />
-    <input type="text" id="patientDiagnosis" placeholder="Diagnosa Pasien" required />
-    
-    <fieldset style="margin-top: 10px;">
-      <legend><strong>Tindakan Fisioterapi:</strong></legend>
-      <label><input type="checkbox" name="tindakan" value="IR" /> IR</label><br/>
-      <label><input type="checkbox" name="tindakan" value="TENS" /> TENS</label><br/>
-      <label><input type="checkbox" name="tindakan" value="SWD" /> SWD</label><br/>
-      <label><input type="checkbox" name="tindakan" value="US" /> US</label><br/>
-      <label><input type="checkbox" name="tindakan" value="EXCERSISE 1" /> EXCERSISE 1</label><br/>
-      <label><input type="checkbox" name="tindakan" value="EXCERSISE 2" /> EXCERSISE 2</label><br/>
-      <label><input type="checkbox" name="tindakan" value="EXCERSISE 3" /> EXCERSISE 3</label>
-    </fieldset>
+  <div class="container">
+    <!-- FORM ANTRIAN -->
+    <form id="queueForm">
+      <input type="text" id="patientName" placeholder="Nama Pasien" required />
+      <input type="text" id="patientRM" placeholder="No RM" required />
+      <input type="text" id="patientDiagnosis" placeholder="Diagnosa Pasien" required />
 
-    <input type="datetime-local" id="examDateTime" required />
+      <fieldset style="margin-top: 10px;">
+        <legend><strong>Tindakan Fisioterapi:</strong></legend>
+        <label><input type="checkbox" name="tindakan" value="IR" /> IR</label><br/>
+        <label><input type="checkbox" name="tindakan" value="TENS" /> TENS</label><br/>
+        <label><input type="checkbox" name="tindakan" value="SWD" /> SWD</label><br/>
+        <label><input type="checkbox" name="tindakan" value="US" /> US</label><br/>
+        <label><input type="checkbox" name="tindakan" value="EXCERSISE 1" /> EXCERSISE 1</label><br/>
+        <label><input type="checkbox" name="tindakan" value="EXCERSISE 2" /> EXCERSISE 2</label><br/>
+        <label><input type="checkbox" name="tindakan" value="EXCERSISE 3" /> EXCERSISE 3</label>
+      </fieldset>
 
-    <button type="submit">Tambah ke Antrian</button>
-  </form>
+      <input type="datetime-local" id="examDateTime" required />
+      <button type="submit">Tambah ke Antrian</button>
+    </form>
 
-  <!-- TOMBOL EKSPOR -->
-  <button id="exportBtn" onclick="exportToExcel()">📥 Ekspor Excel</button>
+    <!-- TOMBOL EKSPOR -->
+    <button id="exportBtn" class="export-button" onclick="exportToExcel()">📥 Ekspor Excel</button>
 
-  <!-- TABEL ANTRIAN -->
-  <table id="queueTable">
-    <thead>
-      <tr>
-        <th>No</th>
-        <th>Nama</th>
-        <th>No RM</th>
-        <th>Diagnosa</th>
-        <th>Waktu</th>
-        <th>Tindakan</th>
-        <th>Status</th>
-        <th>Fisioterapis</th>
-        <th>Respon</th>
-        <th>Aksi</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
+    <!-- TABEL ANTRIAN -->
+    <table id="queueTable">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Nama</th>
+          <th>No RM</th>
+          <th>Diagnosa</th>
+          <th>Waktu</th>
+          <th>Tindakan</th>
+          <th>Status</th>
+          <th>Fisioterapis</th>
+          <th>Respon</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
 
   <!-- MODAL DROPDOWN -->
   <div id="fisioterapisModal" class="modal">
@@ -81,4 +73,3 @@
 
   <script type="module" src="script.js"></script>
 </body>
-</html>
