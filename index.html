@@ -22,13 +22,22 @@
   <!-- FORM ANTRIAN -->
   <form id="queueForm">
     <input type="text" id="patientName" placeholder="Nama Pasien" required />
+    <input type="text" id="patientRM" placeholder="No RM" required />
+    <input type="text" id="patientDiagnosis" placeholder="Diagnosa Pasien" required />
+    
+    <fieldset style="margin-top: 10px;">
+      <legend><strong>Tindakan Fisioterapi:</strong></legend>
+      <label><input type="checkbox" name="tindakan" value="IR" /> IR</label><br/>
+      <label><input type="checkbox" name="tindakan" value="TENS" /> TENS</label><br/>
+      <label><input type="checkbox" name="tindakan" value="SWD" /> SWD</label><br/>
+      <label><input type="checkbox" name="tindakan" value="US" /> US</label><br/>
+      <label><input type="checkbox" name="tindakan" value="EXCERSISE 1" /> EXCERSISE 1</label><br/>
+      <label><input type="checkbox" name="tindakan" value="EXCERSISE 2" /> EXCERSISE 2</label><br/>
+      <label><input type="checkbox" name="tindakan" value="EXCERSISE 3" /> EXCERSISE 3</label>
+    </fieldset>
+
     <input type="datetime-local" id="examDateTime" required />
-    <select id="examinationType" required>
-      <option value="">Pilih Jenis Fisioterapi</option>
-      <option value="Fisioterapi Umum">Fisioterapi Umum</option>
-      <option value="Terapi Latihan">Terapi Latihan</option>
-      <option value="Terapi Listrik">Terapi Listrik</option>
-    </select>
+
     <button type="submit">Tambah ke Antrian</button>
   </form>
 
@@ -41,8 +50,10 @@
       <tr>
         <th>No</th>
         <th>Nama</th>
+        <th>No RM</th>
+        <th>Diagnosa</th>
         <th>Waktu</th>
-        <th>Jenis</th>
+        <th>Tindakan</th>
         <th>Status</th>
         <th>Fisioterapis</th>
         <th>Respon</th>
