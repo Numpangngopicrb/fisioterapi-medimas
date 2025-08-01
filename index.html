@@ -3,12 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Antrian Fisioterapi RS Medimas</title>
+  <title>SYSTEM INFORMASI FISIOTERAPI RS MEDIMAS CIREBON</title>
   <link rel="stylesheet" href="style.css" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
-  <h2>Antrian Fisioterapi RS Medimas</h2>
+
+  <!-- HEADER DAN RUNNING TEKS -->
+  <header class="header-title">
+    <h1>SYSTEM INFORMASI FISIOTERAPI RS MEDIMAS CIREBON</h1>
+    <div class="running-text">
+      <marquee behavior="scroll" direction="left" scrollamount="6">
+        Selamat datang di Sistem Informasi Fisioterapi RS Medimas Cirebon — Layanan Antrian, Jadwal & Pemantauan Real-Time!
+      </marquee>
+    </div>
+  </header>
+
+  <!-- FORM ANTRIAN -->
   <form id="queueForm">
     <input type="text" id="patientName" placeholder="Nama Pasien" required />
     <input type="datetime-local" id="examDateTime" required />
@@ -21,8 +32,10 @@
     <button type="submit">Tambah ke Antrian</button>
   </form>
 
+  <!-- TOMBOL EKSPOR -->
   <button id="exportBtn" onclick="exportToExcel()">📥 Ekspor Excel</button>
 
+  <!-- TABEL ANTRIAN -->
   <table id="queueTable">
     <thead>
       <tr>
@@ -39,6 +52,7 @@
     <tbody></tbody>
   </table>
 
+  <!-- MODAL PILIH FISIOTERAPIS -->
   <div id="modal" class="modal">
     <div class="modal-content">
       <h3>Pilih Fisioterapis</h3>
