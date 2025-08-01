@@ -23,14 +23,21 @@ let currentRowKey = null;
 form.addEventListener('submit', async function (e) {
   e.preventDefault();
   const name = document.getElementById('patientName').value;
+  const rm = document.getElementById('patientRM').value;
+  const diagnosis = document.getElementById('patientDiagnosis').value;
   const dateTime = document.getElementById('examDateTime').value;
-  const type = document.getElementById('examinationType').value;
+
+  // Ambil semua checkbox tindakan
+  const tindakanCheckboxes = document.querySelectorAll('input[name="tindakan"]:checked');
+  const tindakanList = Array.from(tindakanCheckboxes).map(cb => cb.value).join(', ');
 
   try {
     await push(queueRef, {
       nama: name,
+      rm: rm,
+      diagnosa: diagnosis,
       waktu: dateTime,
-      jenis: type,
+      tindakan: tindakanList,
       status: 'MENUNGGU',
       fisioterapis: '-',
       respons: '-'
@@ -53,8 +60,10 @@ onValue(queueRef, (snapshot) => {
     row.innerHTML = `
       <td>${no++}</td>
       <td>${data.nama}</td>
+      <td>${data.rm || '-'}</td>
+      <td>${data.diagnosa || '-'}</td>
       <td>${data.waktu}</td>
-      <td>${data.jenis}</td>
+      <td>${data.tindakan || '-'}</td>
       <td class="status ${getStatusClass(data.status)}">${data.status}</td>
       <td class="handled-by">${data.fisioterapis}</td>
       <td class="response-time">${data.respons}</td>
@@ -77,13 +86,11 @@ function getStatusClass(status) {
   }
 }
 
-// TAMPILKAN MODAL DROPDOWN
 window.openFisioterapisModal = function (key) {
   currentRowKey = key;
   document.getElementById('fisioterapisModal').style.display = 'flex';
 };
 
-// KONFIRMASI PILIHAN FISIOTERAPIS
 window.confirmFisioterapisDropdown = async function () {
   const selected = document.getElementById('fisioterapisDropdown').value;
   if (!selected) {
@@ -101,7 +108,6 @@ window.confirmFisioterapisDropdown = async function () {
   document.getElementById('fisioterapisModal').style.display = 'none';
 };
 
-// TUTUP MODAL
 window.closeFisioterapisModal = function () {
   document.getElementById('fisioterapisModal').style.display = 'none';
 };
