@@ -18,6 +18,7 @@ const queueRef = ref(db, 'antrian');
 
 const form = document.getElementById('queueForm');
 const tableBody = document.querySelector('#queueTable tbody');
+let currentRowKey = null; // Untuk menyimpan ID baris yang sedang diproses
 
 form.addEventListener('submit', async function (e) {
   e.preventDefault();
@@ -58,7 +59,7 @@ onValue(queueRef, (snapshot) => {
       <td class="handled-by">${data.fisioterapis}</td>
       <td class="response-time">${data.respons}</td>
       <td class="action-buttons">
-        <button onclick="openFisioterapisPrompt('${key}')">Proses</button>
+        <button onclick="openFisioterapisModal('${key}')">Proses</button>
         <button onclick="completeQueue('${key}')" style="${data.status === 'PROSES' ? '' : 'display:none;'}">Selesai</button>
         <button onclick="deleteQueue('${key}')">Hapus</button>
       </td>
@@ -68,7 +69,7 @@ onValue(queueRef, (snapshot) => {
 });
 
 function getStatusClass(status) {
-  switch(status) {
+  switch (status) {
     case 'MENUNGGU': return 'status-waiting';
     case 'PROSES': return 'status-processing';
     case 'SELESAI': return 'status-done';
@@ -76,33 +77,30 @@ function getStatusClass(status) {
   }
 }
 
-window.openFisioterapisPrompt = async function(key) {
-  const list = [
-    "Nikita Radiantika, A.Md.Ftr",
-    "Intu Wahyuni, A.Md.Ftr",
-    "Indah Fitricya Niwar, A.Md.Ftr",
-    "Faika Nabila Cheryl, A.Md.Ftr"
-  ];
+// ✅ MODAL DROPDOWN LOGIC
+window.openFisioterapisModal = function (key) {
+  currentRowKey = key;
+  document.getElementById('fisioterapisDropdown').value = "";
+  document.getElementById('fisioterapisModal').style.display = 'flex';
+};
 
-  const pilihan = prompt(
-    "Pilih Fisioterapis:\n" +
-    list.map((nama, i) => `${i + 1}. ${nama}`).join("\n")
-  );
+window.closeFisioterapisModal = function () {
+  document.getElementById('fisioterapisModal').style.display = 'none';
+};
 
-  const index = parseInt(pilihan) - 1;
-  if (index >= 0 && index < list.length) {
-    const selected = list[index];
-    const startTime = new Date().toISOString();
+window.confirmFisioterapisDropdown = async function () {
+  const selected = document.getElementById('fisioterapisDropdown').value;
+  if (!selected) return alert("Silakan pilih fisioterapis.");
 
-    await update(ref(db, 'antrian/' + key), {
-      status: 'PROSES',
-      fisioterapis: selected,
-      startTime: startTime
-    });
-  } else {
-    alert("Pilihan tidak valid atau dibatalkan.");
-  }
-}
+  const startTime = new Date().toISOString();
+  await update(ref(db, 'antrian/' + currentRowKey), {
+    status: 'PROSES',
+    fisioterapis: selected,
+    startTime: startTime
+  });
+
+  closeFisioterapisModal();
+};
 
 window.completeQueue = async function (key) {
   const res = await fetch(`${firebaseConfig.databaseURL}/antrian/${key}.json`);
@@ -119,14 +117,14 @@ window.completeQueue = async function (key) {
       respons: duration
     });
   }
-}
+};
 
 window.deleteQueue = async function (key) {
   await remove(ref(db, 'antrian/' + key));
-}
+};
 
 window.exportToExcel = function () {
   const table = document.getElementById("queueTable");
   const wb = XLSX.utils.table_to_book(table, { sheet: "Antrian Fisioterapi" });
   XLSX.writeFile(wb, "Antrian-Fisioterapi.xlsx");
-}
+};
