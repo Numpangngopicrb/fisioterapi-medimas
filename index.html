@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Antrian Fisioterapi RS Medimas</title>
+  <link rel="stylesheet" href="style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+</head>
+<body>
+  <h2>Antrian Fisioterapi RS Medimas</h2>
+  <form id="queueForm">
+    <input type="text" id="patientName" placeholder="Nama Pasien" required />
+    <input type="datetime-local" id="examDateTime" required />
+    <select id="examinationType" required>
+      <option value="">Pilih Jenis Fisioterapi</option>
+      <option value="Fisioterapi Umum">Fisioterapi Umum</option>
+      <option value="Terapi Latihan">Terapi Latihan</option>
+      <option value="Terapi Listrik">Terapi Listrik</option>
+    </select>
+    <button type="submit">Tambah ke Antrian</button>
+  </form>
+
+  <button id="exportBtn" onclick="exportToExcel()">📥 Ekspor Excel</button>
+
+  <table id="queueTable">
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Waktu</th>
+        <th>Jenis</th>
+        <th>Status</th>
+        <th>Fisioterapis</th>
+        <th>Respon</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <div id="modal" class="modal">
+    <div class="modal-content">
+      <h3>Pilih Fisioterapis</h3>
+      <select id="fisioterapisSelect">
+        <option value="Fisioterapis A">Fisioterapis A</option>
+        <option value="Fisioterapis B">Fisioterapis B</option>
+        <option value="Fisioterapis C">Fisioterapis C</option>
+      </select>
+      <button onclick="confirmFisioterapis()">OK</button>
+    </div>
+  </div>
+
+  <script type="module" src="script.js"></script>
+</body>
+</html>
