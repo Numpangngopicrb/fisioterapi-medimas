@@ -21,16 +21,23 @@
 
   <!-- FORM ANTRIAN -->
   <form id="queueForm">
-    <input type="text" id="patientName" placeholder="Nama Pasien" required />
-    <input type="datetime-local" id="examDateTime" required />
-    <select id="examinationType" required>
-      <option value="">Pilih Jenis Fisioterapi</option>
-      <option value="Fisioterapi Umum">Fisioterapi Umum</option>
-      <option value="Terapi Latihan">Terapi Latihan</option>
-      <option value="Terapi Listrik">Terapi Listrik</option>
-    </select>
-    <button type="submit">Tambah ke Antrian</button>
-  </form>
+  <input type="text" id="patientName" placeholder="Nama Pasien" required />
+  <input type="text" id="patientRM" placeholder="No RM" required />
+  <input type="datetime-local" id="examDateTime" required />
+
+  <label for="tindakanFisioterapi">Tindakan Fisioterapi:</label>
+  <div class="checkbox-group">
+    <label><input type="checkbox" name="tindakan" value="IR" /> IR</label>
+    <label><input type="checkbox" name="tindakan" value="TENS" /> TENS</label>
+    <label><input type="checkbox" name="tindakan" value="SWD" /> SWD</label>
+    <label><input type="checkbox" name="tindakan" value="US" /> US</label>
+    <label><input type="checkbox" name="tindakan" value="EXCERSISE 1" /> EXCERSISE 1</label>
+    <label><input type="checkbox" name="tindakan" value="EXCERSISE 2" /> EXCERSISE 2</label>
+    <label><input type="checkbox" name="tindakan" value="EXCERSISE 3" /> EXCERSISE 3</label>
+  </div>
+
+  <button type="submit">Tambah ke Antrian</button>
+</form>
 
   <!-- TOMBOL EKSPOR -->
   <button id="exportBtn" onclick="exportToExcel()">📥 Ekspor Excel</button>
