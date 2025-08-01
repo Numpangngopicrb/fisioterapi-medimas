@@ -2,17 +2,32 @@
 body {
   font-family: Arial, sans-serif;
   padding: 10px;
-  background-color: #f0f0f0;
+  background-color: #ffe6f0; /* pink muda */
   margin: 0;
 }
 
 .container {
   max-width: 700px;
   margin: 20px auto;
-  background-color: #ffffff;
+  background-color: #fff0f6;
   padding: 20px;
   border-radius: 12px;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 15px rgba(255, 105, 180, 0.2); /* pink shadow */
+}
+
+/* Header */
+.header-title h1 {
+  text-align: center;
+  color: #d63384;
+}
+
+/* Running text */
+.running-text {
+  background-color: #ffb6c1;
+  color: white;
+  padding: 5px;
+  font-weight: bold;
+  border-radius: 0 0 6px 6px;
 }
 
 /* Formulir input */
@@ -23,19 +38,19 @@ form button {
   padding: 8px;
   margin-bottom: 12px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid #f4a6bd;
   font-size: 14px;
 }
 
 form button {
-  background-color: #3b999b;
+  background-color: #ff69b4;
   color: white;
   border: none;
   cursor: pointer;
 }
 
 form button:hover {
-  background-color: #33888a;
+  background-color: #ff1493;
 }
 
 /* Tabel antrian */
@@ -43,19 +58,19 @@ table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
-  background-color: white;
+  background-color: #fff0f5;
   margin-top: 20px;
 }
 
 table th,
 table td {
-  border: 1px solid #ccc;
+  border: 1px solid #f4a6bd;
   padding: 6px;
   text-align: center;
 }
 
 th {
-  background-color: #3b999b;
+  background-color: #ff69b4;
   color: white;
 }
 
@@ -69,12 +84,12 @@ button {
 }
 
 .action-buttons button {
-  background-color: #eee;
-  border: 1px solid #ccc;
+  background-color: #ffe6ef;
+  border: 1px solid #ffb6c1;
 }
 
 .action-buttons button:hover {
-  background-color: #ddd;
+  background-color: #fddde6;
 }
 
 /* Status warna */
@@ -85,8 +100,8 @@ button {
 }
 
 .status-processing {
-  background-color: #cce5ff;
-  color: #004085;
+  background-color: #f3c9e8;
+  color: #a61d6a;
   font-weight: bold;
 }
 
@@ -111,7 +126,7 @@ button {
 }
 
 #fisioterapisModal .modal-content {
-  background-color: #fff;
+  background-color: #ffeaf5;
   padding: 20px;
   border-radius: 10px;
   width: 300px;
@@ -120,7 +135,7 @@ button {
 
 /* Ekspor tombol */
 .export-button {
-  background-color: #28a745;
+  background-color: #db4a89;
   color: white;
   padding: 6px 10px;
   font-size: 14px;
@@ -131,7 +146,7 @@ button {
 }
 
 .export-button:hover {
-  background-color: #218838;
+  background-color: #c5357a;
 }
 
 /* Responsif */
