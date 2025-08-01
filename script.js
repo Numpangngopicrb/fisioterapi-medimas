@@ -43,18 +43,16 @@ function renderTable() {
   tableBody.innerHTML = "";
   queue.forEach((data, index) => {
     const row = tableBody.insertRow();
-    row.innerHTML = `
-      <td>${index + 1}</td>
-      <td>${data.name}<br><small>No RM: ${data.rm}<br>Dx: ${data.diagnosa}</small></td>
-      <td>${new Date(data.time).toLocaleString("id-ID")}</td>
-      <td>${data.tindakan}</td>
-      <td>${data.status}</td>
-      <td>${data.fisio}</td>
-      <td>${data.respon}</td>
-      <td>
-        <button onclick="openFisioterapisModal(${index})">Pilih Fisioterapis</button>
-        <button onclick="markAsDone(${index})">Selesai</button>
-      </td>
+row.innerHTML = `
+  <td>${index + 1}</td>
+  <td>${entry.nama}</td>
+  <td>${entry.waktu}</td>
+  <td>${entry.jenis}</td>
+  <td>${entry.status || '-'}</td>
+  <td>${entry.fisioterapis || '-'}</td>
+  <td>${entry.respon || '-'}</td>
+  <td>${dropdown}</td>
+`;
     `;
   });
 }
