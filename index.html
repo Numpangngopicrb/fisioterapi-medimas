@@ -52,16 +52,18 @@
     <tbody></tbody>
   </table>
 
-  <!-- MODAL PILIH FISIOTERAPIS -->
-  <div id="modal" class="modal">
+    <div id="fisioterapisModal" class="modal">
     <div class="modal-content">
       <h3>Pilih Fisioterapis</h3>
-      <select id="fisioterapisSelect">
-        <option value="Fisioterapis A">Fisioterapis A</option>
-        <option value="Fisioterapis B">Fisioterapis B</option>
-        <option value="Fisioterapis C">Fisioterapis C</option>
+      <select id="fisioterapisDropdown">
+        <option value="">-- Pilih --</option>
+        <option value="Nikita Radiantika, A.Md.Ftr">Nikita Radiantika, A.Md.Ftr</option>
+        <option value="Intu Wahyuni, A.Md.Ftr">Intu Wahyuni, A.Md.Ftr</option>
+        <option value="Indah Fitricya Niwar, A.Md.Ftr">Indah Fitricya Niwar, A.Md.Ftr</option>
+        <option value="Faika Nabila Cheryl, A.Md.Ftr">Faika Nabila Cheryl, A.Md.Ftr</option>
       </select>
-      <button onclick="confirmFisioterapis()">OK</button>
+      <button onclick="confirmFisioterapisDropdown()">OK</button>
+      <button onclick="closeFisioterapisModal()">Batal</button>
     </div>
   </div>
 
