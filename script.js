@@ -1,9 +1,9 @@
 window.addEventListener("DOMContentLoaded", () => {
   let queue = [];
-  let tableBody = document.querySelector("#antrianTable tbody");
-  const form = document.getElementById("queueForm");
+  let form = document.getElementById("queueForm");
 
   function renderTable() {
+    const tableBody = document.querySelector("#antrianTable tbody");
     if (!tableBody) return;
 
     tableBody.innerHTML = "";
@@ -11,7 +11,7 @@ window.addEventListener("DOMContentLoaded", () => {
       const row = tableBody.insertRow();
 
       const fisioterapisDropdown = `
-        <select onchange="pilihFisioterapis(this, ${index})">
+        <select onchange="window.pilihFisioterapis(this, ${index})">
           <option value="">Pilih Fisioterapis</option>
           <option value="Nikita Radiantika, A.Md.Ftr">Nikita Radiantika, A.Md.Ftr</option>
           <option value="Intu Wahyuni, A.Md.Ftr">Intu Wahyuni, A.Md.Ftr</option>
@@ -65,7 +65,7 @@ window.addEventListener("DOMContentLoaded", () => {
     form.reset();
   });
 
-  // Fungsi global agar bisa diakses dari dropdown onchange
+  // Fungsi global supaya bisa dipanggil dari HTML
   window.pilihFisioterapis = function (selectEl, index) {
     const selectedName = selectEl.value;
     if (!selectedName) return;
@@ -75,7 +75,6 @@ window.addEventListener("DOMContentLoaded", () => {
     renderTable();
   };
 
-  // Fungsi ekspor tetap global
   window.exportToExcel = function () {
     const wb = XLSX.utils.book_new();
     const ws_data = [
