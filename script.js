@@ -1,98 +1,109 @@
-window.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   let queue = [];
-  let form = document.getElementById("queueForm");
+  let selectedRow = null;
 
-  function renderTable() {
-    const tableBody = document.querySelector("#antrianTable tbody");
-    if (!tableBody) return;
+  const form = document.getElementById("queueForm");
+  const tableBody = document.querySelector("#antrianTable tbody");
+  const modal = document.getElementById("fisioterapisModal");
+  const dropdown = document.getElementById("fisioterapisDropdown");
 
-    tableBody.innerHTML = "";
-    queue.forEach((data, index) => {
-      const row = tableBody.insertRow();
-
-      const fisioterapisDropdown = `
-        <select onchange="window.pilihFisioterapis(this, ${index})">
-          <option value="">Pilih Fisioterapis</option>
-          <option value="Nikita Radiantika, A.Md.Ftr">Nikita Radiantika, A.Md.Ftr</option>
-          <option value="Intu Wahyuni, A.Md.Ftr">Intu Wahyuni, A.Md.Ftr</option>
-          <option value="Indah Fitricya Niwar, A.Md.Ftr">Indah Fitricya Niwar, A.Md.Ftr</option>
-          <option value="Faika Nabila Cheryl, A.Md.Ftr">Faika Nabila Cheryl, A.Md.Ftr</option>
-        </select>
-      `;
-
-      row.innerHTML = `
-        <td>${index + 1}</td>
-        <td>${data.name}</td>
-        <td>${new Date(data.time).toLocaleString("id-ID")}</td>
-        <td>${data.tindakan}</td>
-        <td>${data.status || '-'}</td>
-        <td>${data.fisio || '-'}</td>
-        <td>${data.respon || '-'}</td>
-        <td>${fisioterapisDropdown}</td>
-      `;
-    });
-  }
-
+  // Tambah data antrian
   form.addEventListener("submit", function (e) {
     e.preventDefault();
 
     const name = document.getElementById("patientName").value.trim();
     const rm = document.getElementById("patientRM").value.trim();
     const diagnosa = document.getElementById("diagnosa").value.trim();
-    const time = document.getElementById("examDateTime").value;
-    const tindakan = Array.from(document.querySelectorAll('input[name="tindakan"]:checked'))
-      .map(cb => cb.value)
-      .join(", ");
+    const waktu = document.getElementById("examDateTime").value;
+    const tindakan = Array.from(
+      document.querySelectorAll("input[name='tindakan']:checked")
+    ).map((el) => el.value);
 
-    if (!name || !rm || !diagnosa || !time || !tindakan) {
-      alert("Semua kolom wajib diisi!");
+    if (!name || !rm || !diagnosa || !waktu || tindakan.length === 0) {
+      alert("Mohon isi semua kolom dan pilih minimal satu tindakan.");
       return;
     }
 
-    const data = {
+    queue.push({
       name,
       rm,
       diagnosa,
-      time,
-      tindakan,
+      waktu,
+      tindakan: tindakan.join(", "),
       status: "Menunggu",
-      fisio: "",
+      fisioterapis: "",
       respon: ""
-    };
+    });
 
-    queue.push(data);
-    renderTable();
     form.reset();
+    renderTable();
   });
 
-  // Fungsi global supaya bisa dipanggil dari HTML
-  window.pilihFisioterapis = function (selectEl, index) {
-    const selectedName = selectEl.value;
-    if (!selectedName) return;
+  // Render tabel
+  function renderTable() {
+    if (!tableBody) return;
 
-    queue[index].fisio = selectedName;
-    queue[index].status = "Sedang Diperiksa";
-    renderTable();
+    tableBody.innerHTML = "";
+    queue.forEach((item, index) => {
+      const row = document.createElement("tr");
+
+      row.innerHTML = `
+        <td>${index + 1}</td>
+        <td>${item.name} <br><small>RM: ${item.rm}<br>${item.diagnosa}</small></td>
+        <td>${item.waktu}</td>
+        <td>${item.tindakan}</td>
+        <td>${item.status}</td>
+        <td>${item.fisioterapis}</td>
+        <td>${item.respon}</td>
+        <td>
+          <button onclick="openFisioterapisModal(${index})">Pilih</button>
+          <button onclick="selesaiAntrian(${index})">Selesai</button>
+        </td>
+      `;
+
+      tableBody.appendChild(row);
+    });
+  }
+
+  // Fungsi ekspor Excel
+  window.exportToExcel = function () {
+    const ws = XLSX.utils.json_to_sheet(queue);
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Data Antrian");
+    XLSX.writeFile(wb, "antrian-fisioterapi.xlsx");
   };
 
-  window.exportToExcel = function () {
-    const wb = XLSX.utils.book_new();
-    const ws_data = [
-      ["No", "Nama", "No RM", "Diagnosa", "Waktu", "Tindakan", "Status", "Fisioterapis", "Respon"],
-      ...queue.map((d, i) => [
-        i + 1,
-        d.name,
-        d.rm,
-        d.diagnosa,
-        new Date(d.time).toLocaleString("id-ID"),
-        d.tindakan,
-        d.status,
-        d.fisio,
-        d.respon
-      ])
-    ];
-    const ws = XLSX.utils.aoa_to_sheet(ws_data);
-    XLSX.utils.book_append_sheet(wb, ws, "Antrian");
-    XLSX.writeFile(wb, "antrian-fisioterapi.xlsx");
+  // Tampilkan modal fisioterapis
+  window.openFisioterapisModal = function (index) {
+    selectedRow = index;
+    dropdown.value = "";
+    modal.style.display = "block";
+  };
+
+  // Tutup modal
+  window.closeFisioterapisModal = function () {
+    modal.style.display = "none";
+  };
+
+  // Konfirmasi dropdown fisioterapis
+  window.confirmFisioterapisDropdown = function () {
+    const selectedFisio = dropdown.value;
+    if (selectedFisio && selectedRow !== null) {
+      queue[selectedRow].fisioterapis = selectedFisio;
+      queue[selectedRow].status = "Diproses";
+      queue[selectedRow].respon = "✅";
+      renderTable();
+      closeFisioterapisModal();
+    } else {
+      alert("Silakan pilih fisioterapis.");
+    }
+  };
+
+  // Tandai selesai
+  window.selesaiAntrian = function (index) {
+    if (queue[index].status === "Selesai") return;
+    queue[index].status = "Selesai";
+    queue[index].respon = "✔️";
+    renderTable();
   };
 });
