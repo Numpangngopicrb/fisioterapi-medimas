@@ -1,5 +1,5 @@
 let queue = [];
-let tableBody = document.querySelector("#queueTable tbody");
+let tableBody = document.querySelector("#antrianTable tbody");
 const form = document.getElementById("queueForm");
 
 form.addEventListener("submit", function (e) {
@@ -68,12 +68,6 @@ function pilihFisioterapis(selectEl, index) {
 
   queue[index].fisio = selectedName;
   queue[index].status = "Sedang Diperiksa";
-  renderTable();
-}
-
-function markAsDone(index) {
-  queue[index].status = "Selesai";
-  queue[index].respon = "✅";
   renderTable();
 }
 
