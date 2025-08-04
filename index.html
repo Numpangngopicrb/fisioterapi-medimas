@@ -19,46 +19,46 @@
     </div>
   </header>
 
-   <!-- FORM ANTRIAN -->
-<form id="queueForm">
-  <input type="text" id="patientName" placeholder="Nama Pasien" required />
-  <input type="text" id="patientRM" placeholder="No RM" required />
-  <input type="text" id="diagnosa" placeholder="Diagnosa" required />
-  <input type="datetime-local" id="examDateTime" required />
+  <!-- FORM ANTRIAN -->
+  <form id="queueForm">
+    <input type="text" id="patientName" placeholder="Nama Pasien" required />
+    <input type="text" id="patientRM" placeholder="No RM" required />
+    <input type="text" id="diagnosa" placeholder="Diagnosa" required />
+    <input type="datetime-local" id="examDateTime" required />
 
-  <label for="tindakanFisioterapi">Tindakan Fisioterapi:</label>
-  <div class="checkbox-group">
-    <label><input type="checkbox" name="tindakan" value="IR" /> IR</label>
-    <label><input type="checkbox" name="tindakan" value="TENS" /> TENS</label>
-    <label><input type="checkbox" name="tindakan" value="SWD" /> SWD</label>
-    <label><input type="checkbox" name="tindakan" value="US" /> US</label>
-    <label><input type="checkbox" name="tindakan" value="EXCERSISE 1" /> EXCERSISE 1</label>
-    <label><input type="checkbox" name="tindakan" value="EXCERSISE 2" /> EXCERSISE 2</label>
-    <label><input type="checkbox" name="tindakan" value="EXCERSISE 3" /> EXCERSISE 3</label>
-  </div>
+    <label for="tindakanFisioterapi">Tindakan Fisioterapi:</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="tindakan" value="IR" /> IR</label>
+      <label><input type="checkbox" name="tindakan" value="TENS" /> TENS</label>
+      <label><input type="checkbox" name="tindakan" value="SWD" /> SWD</label>
+      <label><input type="checkbox" name="tindakan" value="US" /> US</label>
+      <label><input type="checkbox" name="tindakan" value="EXCERSISE 1" /> EXCERSISE 1</label>
+      <label><input type="checkbox" name="tindakan" value="EXCERSISE 2" /> EXCERSISE 2</label>
+      <label><input type="checkbox" name="tindakan" value="EXCERSISE 3" /> EXCERSISE 3</label>
+    </div>
 
-  <button type="submit">Tambah ke Antrian</button>
-</form>
+    <button type="submit">Tambah ke Antrian</button>
+  </form>
 
   <!-- TOMBOL EKSPOR -->
   <button id="exportBtn" onclick="exportToExcel()">📥 Ekspor Excel</button>
 
   <!-- TABEL ANTRIAN -->
   <table id="antrianTable">
-  <thead>
-    <tr>
-      <th>No</th>
-      <th>Nama</th>
-      <th>Waktu</th>
-      <th>Jenis</th>
-      <th>Status</th>
-      <th>Fisioterapis</th>
-      <th>Respon</th>
-      <th>Aksi</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+    <thead>
+      <tr>
+        <th>No</th>
+        <th>Nama</th>
+        <th>Waktu</th>
+        <th>Jenis</th>
+        <th>Status</th>
+        <th>Fisioterapis</th>
+        <th>Respon</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 
   <!-- MODAL DROPDOWN -->
   <div id="fisioterapisModal" class="modal">
