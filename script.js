@@ -1,40 +1,51 @@
 let queue = [];
-let tableBody = document.querySelector("#antrianTable tbody");
+let tableBody;
 const form = document.getElementById("queueForm");
 
-form.addEventListener("submit", function (e) {
-  e.preventDefault();
+window.addEventListener("DOMContentLoaded", () => {
+  tableBody = document.querySelector("#antrianTable tbody");
 
-  const name = document.getElementById("patientName").value.trim();
-  const rm = document.getElementById("patientRM").value.trim();
-  const diagnosa = document.getElementById("diagnosa").value.trim();
-  const time = document.getElementById("examDateTime").value;
-  const tindakan = Array.from(document.querySelectorAll('input[name="tindakan"]:checked'))
-    .map(cb => cb.value)
-    .join(", ");
-
-  if (!name || !rm || !diagnosa || !time || !tindakan) {
-    alert("Semua kolom wajib diisi!");
+  if (!tableBody) {
+    console.error("Elemen tbody #antrianTable tidak ditemukan.");
     return;
   }
 
-  const data = {
-    name,
-    rm,
-    diagnosa,
-    time,
-    tindakan,
-    status: "Menunggu",
-    fisio: "",
-    respon: ""
-  };
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  queue.push(data);
-  renderTable();
-  form.reset();
+    const name = document.getElementById("patientName").value.trim();
+    const rm = document.getElementById("patientRM").value.trim();
+    const diagnosa = document.getElementById("diagnosa").value.trim();
+    const time = document.getElementById("examDateTime").value;
+    const tindakan = Array.from(document.querySelectorAll('input[name="tindakan"]:checked'))
+      .map(cb => cb.value)
+      .join(", ");
+
+    if (!name || !rm || !diagnosa || !time || !tindakan) {
+      alert("Semua kolom wajib diisi!");
+      return;
+    }
+
+    const data = {
+      name,
+      rm,
+      diagnosa,
+      time,
+      tindakan,
+      status: "Menunggu",
+      fisio: "",
+      respon: ""
+    };
+
+    queue.push(data);
+    renderTable();
+    form.reset();
+  });
 });
 
 function renderTable() {
+  if (!tableBody) return;
+
   tableBody.innerHTML = "";
   queue.forEach((data, index) => {
     const row = tableBody.insertRow();
